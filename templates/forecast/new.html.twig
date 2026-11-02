@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Forecast{% endblock %}
+
+{% block body %}
+    <div class="container mt-4" style="max-width: 800px;">
+        <h1 class="h2 mb-4 text-primary">Create new Forecast</h1>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body p-4">
+                {{ include('forecast/_form.html.twig') }}
+            </div>
+        </div>
+
+        <div class="d-grid d-md-flex gap-2">
+            <a href="{{ path('app_forecast_index') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to list
+            </a>
+        </div>
+    </div>
+    <!-- Wygenerowano przez gemini -->
+{% endblock %}
+

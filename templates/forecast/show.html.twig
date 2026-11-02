@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Forecast{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="mb-4">Forecast</h1>
+
+        <table class="table table-bordered table-striped">
+            <tbody>
+            <tr>
+                <th style="width: 200px;">Id</th>
+                <td>{{ forecast.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ forecast.date ? forecast.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Humidity</th>
+                <td>{{ forecast.humidity }}</td>
+            </tr>
+            <tr>
+                <th>Wind_speed</th>
+                <td>{{ forecast.windSpeed }}</td>
+            </tr>
+            <tr>
+                <th>Temp_celc</th>
+                <td>{{ forecast.tempCelc }}</td>
+            </tr>
+            <tr>
+                <th>Precipitation</th>
+                <td>{{ forecast.precipitation }}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Kontener z przyciskami (Flexbox układa je w jednej linii i dodaje odstępy) -->
+        <div class="d-flex gap-2 align-items-center mt-3">
+            <a href="{{ path('app_forecast_index') }}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to list
+            </a>
+
+            <a href="{{ path('app_forecast_edit', {'id': forecast.id}) }}" class="btn btn-warning">
+                <i class="bi bi-pencil"></i> Edit
+            </a>
+
+            <!-- Formularz usuwania (zazwyczaj zawiera własny przycisk submit z klasą btn-danger) -->
+            {{ include('forecast/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
+<!-- Wygenerowane przez gemini -->

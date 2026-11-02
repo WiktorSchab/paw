@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Location index{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h2 mb-0">Location index</h1>
+        <a href="{{ path('app_location_new') }}" class="btn btn-success btn-sm">
+            <i class="bi bi-plus-circle"></i> Create new
+        </a>
+    </div>
+
+    <!-- WIDOK MOBILNY: Widoczny tylko na ekranach mniejszych niż md (768px) -->
+    <div class="d-block d-md-none">
+        {% for location in locations %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-secondary">ID: {{ location.id }}</span>
+                        <span class="text-muted small">{{ location.country }}</span>
+                    </div>
+                    <h5 class="card-title text-primary mb-3">{{ location.name }}</h5>
+                    <div class="row g-2 mb-3 pt-2 border-top text-muted small">
+                        <div class="col-6"><strong>Geo width:</strong> {{ location.geoWidth }}</div>
+                        <div class="col-6"><strong>Geo length:</strong> {{ location.geoLenght }}</div>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="{{ path('app_location_show', {'id': location.id}) }}" class="btn btn-sm btn-outline-primary">Show</a>
+                        <a href="{{ path('app_location_edit', {'id': location.id}) }}" class="btn btn-sm btn-outline-warning">Edit</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center">No records found</div>
+        {% endfor %}
+    </div>
+
+    <!-- WIDOK DESKTOP: Widoczny od ekranów md wzwyż -->
+    <div class="d-none d-md-block table-responsive">
+        <table class="table table-bordered table-striped table-hover align-middle">
+            <thead class="table-light">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Country</th>
+                <th>Geo_width</th>
+                <th>Geo_lenght</th>
+                <th class="text-center" style="width: 180px;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for location in locations %}
+                <tr>
+                    <td>{{ location.id }}</td>
+                    <td><strong>{{ location.name }}</strong></td>
+                    <td>{{ location.country }}</td>
+                    <td>{{ location.geoWidth }}</td>
+                    <td>{{ location.geoLenght }}</td>
+                    <td class="text-center">
+                        <div class="btn-group btn-group-sm">
+                            <a href="{{ path('app_location_show', {'id': location.id}) }}" class="btn btn-outline-primary">Show</a>
+                            <a href="{{ path('app_location_edit', {'id': location.id}) }}" class="btn btn-outline-warning">Edit</a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!--wygenerowano przez gemini -->
+{% endblock %}
