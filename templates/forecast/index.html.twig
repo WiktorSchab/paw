@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Forecast index{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h2 mb-0">Forecast index</h1>
+        {% if is_granted('ROLE_FORECAST_NEW') %}
+            <a href="{{ path('app_forecast_new') }}" class="btn btn-success btn-sm">
+                <i class="bi bi-plus-circle"></i> Create new
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- WIDOK MOBILNY: Ekrany < 768px -->
+    <div class="d-block d-md-none">
+        {% for forecast in forecasts %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="badge bg-dark">ID: {{ forecast.id }}</span>
+                        <strong class="text-secondary">{{ forecast.date ? forecast.date|date('Y-m-d') : '' }}</strong>
+                    </div>
+
+                    <div class="row text-center mb-3 g-2">
+                        <div class="col-4">
+                            <div class="p-2 bg-light rounded">
+                                <small class="text-muted d-block">Temp</small>
+                                <span class="fw-bold text-danger">{{ forecast.tempCelc }}°C</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 bg-light rounded">
+                                <small class="text-muted d-block">Wind</small>
+                                <span class="fw-bold">{{ forecast.windSpeed }} km/h</span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="p-2 bg-light rounded">
+                                <small class="text-muted d-block">Humid</small>
+                                <span class="fw-bold">{{ forecast.humidity }}%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="small text-muted mb-3">
+                        <i class="bi bi-droplet"></i> Precipitation: <strong>{{ forecast.precipitation }} mm</strong>
+                    </p>
+
+                    <div class="d-grid gap-2">
+                        {% if is_granted('ROLE_FORECAST_SHOW') %}
+                            <a href="{{ path('app_forecast_show', {'id': forecast.id}) }}" class="btn btn-sm btn-outline-primary">Show</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_FORECAST_EDIT') %}
+                            <a href="{{ path('app_forecast_edit', {'id': forecast.id}) }}" class="btn btn-sm btn-outline-warning">Edit</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center">No records found</div>
+        {% endfor %}
+    </div>
+
+    <!-- WIDOK DESKTOP: Ekrany >= 768px -->
+    <div class="d-none d-md-block table-responsive">
+        <table class="table table-bordered table-striped table-hover align-middle">
+            <thead class="table-light">
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Humidity</th>
+                <th>Wind_speed</th>
+                <th>Temp_celc</th>
+                <th>Precipitation</th>
+                <th class="text-center" style="width: 180px;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for forecast in forecasts %}
+                <tr>
+                    <td>{{ forecast.id }}</td>
+                    <td>{{ forecast.date ? forecast.date|date('Y-m-d') : '' }}</td>
+                    <td>{{ forecast.humidity }}%</td>
+                    <td>{{ forecast.windSpeed }} km/h</td>
+                    <td><strong>{{ forecast.tempCelc }}°C</strong></td>
+                    <td>{{ forecast.precipitation }} mm</td>
+                    <td class="text-center">
+                        <div class="btn-group btn-group-sm">
+                            {% if is_granted('ROLE_FORECAST_SHOW') %}
+                                <a href="{{ path('app_forecast_show', {'id': forecast.id}) }}" class="btn btn-outline-primary">Show</a>
+                            {% endif %}
+                            {% if is_granted('ROLE_FORECAST_EDIT') %}
+                                <a href="{{ path('app_forecast_edit', {'id': forecast.id}) }}" class="btn btn-outline-warning">Edit</a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Wygenerowano przez gemini -->
+{% endblock %}
