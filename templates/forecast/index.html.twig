@@ -5,9 +5,11 @@
 {% block body %}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h2 mb-0">Forecast index</h1>
-        <a href="{{ path('app_forecast_new') }}" class="btn btn-success btn-sm">
-            <i class="bi bi-plus-circle"></i> Create new
-        </a>
+        {% if is_granted('ROLE_FORECAST_NEW') %}
+            <a href="{{ path('app_forecast_new') }}" class="btn btn-success btn-sm">
+                <i class="bi bi-plus-circle"></i> Create new
+            </a>
+        {% endif %}
     </div>
 
     <!-- WIDOK MOBILNY: Ekrany < 768px -->
@@ -46,8 +48,12 @@
                     </p>
 
                     <div class="d-grid gap-2">
-                        <a href="{{ path('app_forecast_show', {'id': forecast.id}) }}" class="btn btn-sm btn-outline-primary">Show</a>
-                        <a href="{{ path('app_forecast_edit', {'id': forecast.id}) }}" class="btn btn-sm btn-outline-warning">Edit</a>
+                        {% if is_granted('ROLE_FORECAST_SHOW') %}
+                            <a href="{{ path('app_forecast_show', {'id': forecast.id}) }}" class="btn btn-sm btn-outline-primary">Show</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_FORECAST_EDIT') %}
+                            <a href="{{ path('app_forecast_edit', {'id': forecast.id}) }}" class="btn btn-sm btn-outline-warning">Edit</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -81,8 +87,12 @@
                     <td>{{ forecast.precipitation }} mm</td>
                     <td class="text-center">
                         <div class="btn-group btn-group-sm">
-                            <a href="{{ path('app_forecast_show', {'id': forecast.id}) }}" class="btn btn-outline-primary">Show</a>
-                            <a href="{{ path('app_forecast_edit', {'id': forecast.id}) }}" class="btn btn-outline-warning">Edit</a>
+                            {% if is_granted('ROLE_FORECAST_SHOW') %}
+                                <a href="{{ path('app_forecast_show', {'id': forecast.id}) }}" class="btn btn-outline-primary">Show</a>
+                            {% endif %}
+                            {% if is_granted('ROLE_FORECAST_EDIT') %}
+                                <a href="{{ path('app_forecast_edit', {'id': forecast.id}) }}" class="btn btn-outline-warning">Edit</a>
+                            {% endif %}
                         </div>
                     </td>
                 </tr>
