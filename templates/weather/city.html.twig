@@ -8,10 +8,30 @@
 {% block body %}
     <main>
         <h1>Weather in {{ location.name }}, {{ location.country }}</h1>
-        <ul>
-            {% for measurement in forecasts %}
-                <li>{{ measurement.date|date('d.m.Y') }}: {{ measurement.tempCelc }}&deg;C</li>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>Wind speed</th>
+                <th>Precipitation</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for forecast in forecasts %}
+                <tr>
+                    <td>{{ forecast.date|date('d.m.Y') }}</td>
+                    <td>{{ forecast.tempCelc }}&deg;C</td>
+                    <td>{{ forecast.humidity }}%</td>
+                    <td>{{ forecast.windSpeed }} km/h</td>
+                    <td>{{ forecast.precipitation }} mm</td>
+                </tr>
+            {% else %}
+                <tr><td colspan="5">Brak prognoz</td></tr>
             {% endfor %}
-        </ul>
+            </tbody>
+        </table>
     </main>
+    <!-- Wygenerowane z pomoca claude 5.5 opus -->
 {% endblock %}
